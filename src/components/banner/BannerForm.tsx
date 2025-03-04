@@ -26,7 +26,7 @@ export default function BannerForm() {
         setBanner({ ...banner, [event.target.name]: event.target.value })
     }
 
-    // the goal is to use this logic both to create a banner and to update
+    // the goal is to use this logic both to create a banner and to updating it
     async function handleSubmit(event: React.FormEvent) {
         event.preventDefault()
 

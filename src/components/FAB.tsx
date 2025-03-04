@@ -1,7 +1,9 @@
 import { Button } from '@mui/joy'
 import Add from '@mui/icons-material/Add'
+import { useNavigate } from 'react-router-dom'
 
 export default function FAB() {
+    const navigate = useNavigate()
     return (
         <Button
             style={{
@@ -12,6 +14,7 @@ export default function FAB() {
                 borderRadius: '50%',
             }}
             size="lg"
+            onClick={() => navigate('/banners/create')}
         >
             <Add />
         </Button>

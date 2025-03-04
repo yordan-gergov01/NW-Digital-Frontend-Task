@@ -31,12 +31,15 @@ export default function ScrollableCards<T>(props: {
         if (!newCards) {
             return
         }
-        let currentCards = [...cards]
         setPage(newCards.pageNumber)
         setHasMore(newCards.maxPageNumber > newCards.pageNumber)
-        const newElements = newCards.content.map((value) => props.mapCard(value, deleteItem))
-        setCards([...currentCards, ...newElements])
-    }, [cards, page, deleteItem, props])
+
+        // since the cards are in useCallback, they will always have an old value, so they must be in setCards to always be updated with the current value
+        setCards((prevCards) => [
+            ...prevCards,
+            ...newCards.content.map((value) => props.mapCard(value, deleteItem)),
+        ])
+    }, [page, deleteItem, props])
 
     useEffect(() => {
         if (page != 0) return
