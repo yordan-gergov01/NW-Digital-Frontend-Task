@@ -27,19 +27,24 @@ export default function ScrollableCards<T>(props: {
     }, [])
 
     const loadBanners = useCallback(async () => {
-        const newCards = await props.loadMore({ page, pageSize: 12 })
-        if (!newCards) {
-            return
-        }
-        setPage(newCards.pageNumber)
-        setHasMore(newCards.maxPageNumber > newCards.pageNumber)
+        setPage((prevPage) => {
+            const nextPage = prevPage + 1
+            props
+                .loadMore({ page: nextPage, pageSize: 12 })
+                .then((newCards) => {
+                    if (!newCards) return
 
-        // since the cards are in useCallback, they will always have an old value, so they must be in setCards to always be updated with the current value
-        setCards((prevCards) => [
-            ...prevCards,
-            ...newCards.content.map((value) => props.mapCard(value, deleteItem)),
-        ])
-    }, [page, deleteItem, props])
+                    setHasMore(newCards.maxPageNumber > newCards.pageNumber)
+                    setCards((prevCards) => [
+                        ...prevCards,
+                        ...newCards.content.map((value) => props.mapCard(value, deleteItem)),
+                    ])
+                })
+                .catch((reason) => console.error(reason))
+
+            return nextPage
+        })
+    }, [deleteItem, props])
 
     useEffect(() => {
         if (page != 0) return
