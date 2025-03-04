@@ -6,7 +6,6 @@ import Banners from './pages/banners/Banners.tsx'
 import { PageDataProvider } from './context/page-data/PageDataProvider.tsx'
 import Banner from './pages/banners/Banner.tsx'
 
-
 export default function App() {
     return (
         <CssVarsProvider
