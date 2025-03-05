@@ -1,22 +1,24 @@
 import { Grid } from '@mui/joy'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { PageRequest } from '../services/dto/page.request.ts'
 import { PageResponse } from '../services/dto/page.response.ts'
 
 export default function ScrollableCards<T>(props: {
     loadMore: (page: PageRequest) => Promise<PageResponse<T> | undefined>
     mapCard: (value: T, deleteItem: (id: string) => void) => React.JSX.Element
-    skeletonMap: (_: any, index: number) => React.JSX.Element
 }) {
-    const initial = [...Array(12)].map(props.skeletonMap)
-    const [cards, setCards] = useState<React.JSX.Element[]>(initial)
+    const [cards, setCards] = useState<React.JSX.Element[]>([])
     const [page, setPage] = useState<number>(0)
     const [hasMore, setHasMore] = useState<boolean>(true)
 
+    // prevent loadBanners to be called only on initial rendering
+    const isMounted = useRef(false)
+
     const deleteItem = useCallback((id: string) => {
         setCards((prevCardsState) => {
-            const i = prevCardsState.findIndex((card) => card.key == id)
+            // added check in case it is undefined
+            const i = prevCardsState.findIndex((card) => card.key == id || card.props.key === id)
             if (i != -1) {
                 const newCards = [...prevCardsState]
                 newCards.splice(i, 1)
@@ -27,29 +29,31 @@ export default function ScrollableCards<T>(props: {
     }, [])
 
     const loadBanners = useCallback(async () => {
-        setPage((prevPage) => {
-            const nextPage = prevPage + 1
-            props
-                .loadMore({ page: nextPage, pageSize: 12 })
-                .then((newCards) => {
-                    if (!newCards) return
+        try {
+            const newCards = await props.loadMore({ page, pageSize: 12 })
 
-                    setHasMore(newCards.maxPageNumber > newCards.pageNumber)
-                    setCards((prevCards) => [
-                        ...prevCards,
-                        ...newCards.content.map((value) => props.mapCard(value, deleteItem)),
-                    ])
-                })
-                .catch((reason) => console.error(reason))
+            if (!newCards) return
 
-            return nextPage
-        })
-    }, [deleteItem, props])
+            // check if the banner array is empty to avoid endless display of loader
+            setHasMore(newCards.content.length > 0 && newCards.maxPageNumber > page + 1)
+            setCards((prevCards) => [
+                ...prevCards,
+                ...newCards.content.map((value) => props.mapCard(value, deleteItem)),
+            ])
+
+            // changed the page not to increment on the initial load, and then
+            setPage((prevPage) => prevPage + 1)
+        } catch (error) {
+            console.error(error)
+        }
+    }, [deleteItem, page, props])
 
     useEffect(() => {
-        if (page != 0) return
-        loadBanners().catch((reason) => console.error(reason))
-    }, [loadBanners, page])
+        if (!isMounted.current) {
+            isMounted.current = true
+            loadBanners().catch(console.error)
+        }
+    }, [])
 
     const loadMore = () => {
         loadBanners().catch((reason) => console.error(reason))

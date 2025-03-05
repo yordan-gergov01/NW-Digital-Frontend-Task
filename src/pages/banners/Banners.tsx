@@ -28,7 +28,6 @@ export default function Banners() {
                         }}
                     />
                 )}
-                skeletonMap={(_, i) => <BannerCard key={'skeleton-' + i} />}
             />
             <FAB />
         </>

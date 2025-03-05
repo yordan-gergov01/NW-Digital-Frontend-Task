@@ -24,7 +24,7 @@ class BannerService {
         const start = Math.min(page.page * page.pageSize, total)
         const end = Math.min(start + page.pageSize, total)
 
-        if (start >= total) banners = banners.slice(start, end)
+        banners = banners.slice(start, end)
 
         if (page.orderBy) {
             banners = banners.sort((a, b) => {

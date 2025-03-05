@@ -13,9 +13,13 @@ export default function BannerForm() {
         // existing banners are loaded here using an asynchronous function because BannerService returns Promise
         async function fetchBanner() {
             if (id) {
-                const existingBanner = await BannerService.getBanner(id)
-                if (existingBanner) {
-                    setBanner(existingBanner)
+                try {
+                    const existingBanner = await BannerService.getBanner(id)
+                    if (existingBanner) {
+                        setBanner(existingBanner)
+                    }
+                } catch (error) {
+                    console.error('Error with banner fetching:', error)
                 }
             }
         }
@@ -30,12 +34,16 @@ export default function BannerForm() {
     async function handleSubmit(event: React.FormEvent) {
         event.preventDefault()
 
-        if (id) {
-            await BannerService.updateBanner(id, banner)
-        } else {
-            await BannerService.createBanner(banner)
+        try {
+            if (id) {
+                await BannerService.updateBanner(id, banner)
+            } else {
+                await BannerService.createBanner(banner)
+            }
+            navigate('/banners')
+        } catch (error) {
+            console.error('Error with banner saving:', error)
         }
-        navigate('/banners')
     }
 
     return (
