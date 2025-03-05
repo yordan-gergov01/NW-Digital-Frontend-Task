@@ -53,6 +53,7 @@ export default function BannerCard(props: { banner?: BannerDto; delete?: () => v
                         variant="outlined"
                         size="sm"
                         sx={{ width: '20%', alignSelf: 'center' }}
+                        onClick={props.delete}
                     >
                         <Delete />
                     </IconButton>

@@ -58,7 +58,8 @@ class BannerService {
     }
 
     async deleteBanner(id: string) {
-        //todo delete banner logic
+        const banners = this.listBanners().filter((banner) => banner.id !== id)
+        this.saveBanners(banners)
     }
 
     private listBanners() {

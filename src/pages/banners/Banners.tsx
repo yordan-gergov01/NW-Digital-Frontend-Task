@@ -21,10 +21,12 @@ export default function Banners() {
                         key={banner.id}
                         banner={banner}
                         delete={async () => {
-                            deleteItem(banner.id!)
-                            BannerService.deleteBanner(banner.id!).catch((reason) =>
-                                console.error(reason)
-                            )
+                            try {
+                                deleteItem(banner.id!)
+                                await BannerService.deleteBanner(banner.id!)
+                            } catch (error) {
+                                console.error('Failed deleting banner:', error)
+                            }
                         }}
                     />
                 )}
