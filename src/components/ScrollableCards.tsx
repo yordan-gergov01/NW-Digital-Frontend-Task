@@ -56,24 +56,25 @@ export default function ScrollableCards<T>(props: {
     }
 
     return (
-        <Grid
-            container
-            spacing={2}
+        <InfiniteScroll
+            dataLength={cards.length}
+            next={loadMore}
+            hasMore={hasMore}
+            scrollableTarget="scroll"
+            loader={<h4>Loading...</h4>}
+            endMessage={
+                <p style={{ marginTop: '16px', textAlign: 'center' }}>
+                    <b>There are no more items available...</b>
+                </p>
+            }
         >
-            <InfiniteScroll
-                dataLength={cards.length}
-                next={loadMore}
-                hasMore={hasMore}
-                scrollableTarget="scroll"
-                loader={<h4>Loading...</h4>}
-                endMessage={
-                    <p style={{ textAlign: 'center' }}>
-                        <b>There are no more items available...</b>
-                    </p>
-                }
+            <Grid
+                container
+                spacing={2}
+                sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
             >
                 {...cards}
-            </InfiniteScroll>
-        </Grid>
+            </Grid>
+        </InfiniteScroll>
     )
 }

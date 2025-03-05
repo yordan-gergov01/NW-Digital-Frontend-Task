@@ -1,5 +1,5 @@
 import { BannerDto } from '../../services/dto/banner.dto.ts'
-import { Button, Card, CardActions, CardOverflow, Grid, Skeleton, Typography } from '@mui/joy'
+import { Button, Card, CardActions, CardOverflow, Skeleton, Grid, Typography } from '@mui/joy'
 import Box from '@mui/joy/Box'
 import IconButton from '@mui/joy/IconButton'
 import { Delete } from '@mui/icons-material'
@@ -11,13 +11,12 @@ export default function BannerCard(props: { banner?: BannerDto; delete?: () => v
 
     return (
         <Grid
-            xl={3}
-            lg={4}
-            md={6}
-            sm={6}
             xs={12}
+            sm={6}
+            md={4}
+            lg={3}
         >
-            <Card sx={{ height: 400 }}>
+            <Card sx={{ height: 400, maxWidth: 350, width: '100%', margin: 'auto' }}>
                 <CardOverflow>
                     <Image url={props.banner?.imageUrl} />
                 </CardOverflow>
