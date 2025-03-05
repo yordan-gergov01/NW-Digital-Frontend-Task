@@ -6,19 +6,32 @@ class BannerService {
     private readonly BANNER_KEY = 'banners'
 
     async createBanner(banner: BannerDto) {
+        // adding unique id on each new banner
+        if (!banner.id) {
+            banner.id = crypto.randomUUID()
+        }
+
         this.saveBanners([banner, ...this.listBanners()])
     }
 
     async getBanners(page: PageRequest) {
         if (!page.page) page.page = 0
         if (!page.pageSize) page.pageSize = 12
+
         let banners = this.listBanners()
         const total = banners.length
-        banners = banners.slice(page.page * page.pageSize, (page.page + 1) * page.pageSize)
+
+        const start = Math.min(page.page * page.pageSize, total)
+        const end = Math.min(start + page.pageSize, total)
+
+        if (start >= total) banners = banners.slice(start, end)
+
         if (page.orderBy) {
             banners = banners.sort((a, b) => {
-                const valueA = (Object.entries(a).find(value => value[0] === page.orderBy) || [])[1]
-                const valueB = (Object.entries(b).find(value => value[0] === page.orderBy) || [])[1]
+                const valueA = (Object.entries(a).find((value) => value[0] === page.orderBy) ||
+                    [])[1]
+                const valueB = (Object.entries(b).find((value) => value[0] === page.orderBy) ||
+                    [])[1]
                 if (valueA < valueB) return -1
                 if (valueA > valueB) return 1
                 return 0
@@ -32,12 +45,12 @@ class BannerService {
             content: banners,
             pageSize: page.pageSize,
             pageNumber: page.page,
-            maxPageNumber: total / page.pageSize,
+            maxPageNumber: Math.ceil(total / page.pageSize),
         } as PageResponse<BannerDto>
     }
 
     async getBanner(id: string) {
-        return this.listBanners().find(banner => banner.id === id)
+        return this.listBanners().find((banner) => banner.id === id)
     }
 
     async updateBanner(id: string, banner: BannerDto) {

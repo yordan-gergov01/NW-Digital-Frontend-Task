@@ -32,17 +32,12 @@ export default function ColorSchemeToggle(props: IconButtonProps) {
             color="neutral"
             {...other}
             onClick={(event) => {
-                if (mode === 'light') {
-                    setMode('dark')
-                } else {
-                    setMode('light')
-                }
+                setMode(mode === 'light' ? 'dark' : 'light')
                 onClick?.(event)
             }}
             sx={[...(Array.isArray(sx) ? sx : [sx])]}
         >
-            <DarkModeRoundedIcon />
-            <LightModeIcon />
+            {mode === 'light' ? <DarkModeRoundedIcon /> : <LightModeIcon />}
         </IconButton>
     )
 }

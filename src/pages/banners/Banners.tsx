@@ -15,15 +15,16 @@ export default function Banners() {
     return (
         <>
             <ScrollableCards
-                loadMore={page => BannerService.getBanners(page)}
+                loadMore={(page) => BannerService.getBanners(page)}
                 mapCard={(banner, deleteItem) => (
                     <BannerCard
                         key={banner.id}
                         banner={banner}
                         delete={async () => {
                             deleteItem(banner.id!)
-                            BannerService.deleteBanner(banner.id!)
-                                .catch((reason) => console.error(reason))
+                            BannerService.deleteBanner(banner.id!).catch((reason) =>
+                                console.error(reason)
+                            )
                         }}
                     />
                 )}
