@@ -52,7 +52,7 @@ export default function BannerForm() {
                 <Typography level="h4">{id ? 'Edit Banner' : 'Create Banner'}</Typography>
                 <Input
                     name="link"
-                    placeholder="Link"
+                    placeholder="Title"
                     value={banner.link}
                     onChange={handleChange}
                     required

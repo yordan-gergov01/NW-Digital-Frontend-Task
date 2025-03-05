@@ -68,7 +68,7 @@ export default function ScrollableCards<T>(props: {
             loader={<h4>Loading...</h4>}
             endMessage={
                 <p style={{ marginTop: '16px', textAlign: 'center' }}>
-                    <b>There are no more items available...</b>
+                    {cards.length === 0 && <b>There are no more items available...</b>}
                 </p>
             }
         >
