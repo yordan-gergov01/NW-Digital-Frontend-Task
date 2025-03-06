@@ -3,12 +3,23 @@ import Sheet from '@mui/joy/Sheet'
 import IconButton from '@mui/joy/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import Box from '@mui/joy/Box'
+import Button from '@mui/joy/Button'
 
 import ColorSchemeToggle from './ColorSchemeToggle'
 
 import { toggleSidebar } from '../utils'
+import { useAuth } from '../context/auth/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 export default function Header() {
+    const { logout, isAuthenticated } = useAuth()
+    const navigate = useNavigate()
+
+    function handleLogout() {
+        logout()
+        navigate('/login')
+    }
+
     return (
         <Sheet
             sx={{
@@ -45,6 +56,16 @@ export default function Header() {
             </IconButton>
 
             <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mt: 5 }}>
+                {isAuthenticated && (
+                    <Button
+                        onClick={handleLogout}
+                        color="danger"
+                        variant="solid"
+                        size="sm"
+                    >
+                        Logout
+                    </Button>
+                )}
                 <ColorSchemeToggle sx={{ height: 40, width: 40 }} />
             </Box>
         </Sheet>
