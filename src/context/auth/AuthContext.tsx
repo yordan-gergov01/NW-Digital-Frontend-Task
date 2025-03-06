@@ -11,6 +11,7 @@ const AuthContext = createContext<TypeAuthContext | null>(null)
 
 export function AuthProvider(props: { children: React.ReactNode }) {
     const [user, setUser] = useState<{ email: string } | null>(null)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const token = localStorage.getItem('auth_token')
@@ -24,6 +25,7 @@ export function AuthProvider(props: { children: React.ReactNode }) {
                 localStorage.removeItem('auth_token')
             }
         }
+        setLoading(false)
     }, [])
 
     function login(email: string, password: string) {
@@ -44,7 +46,7 @@ export function AuthProvider(props: { children: React.ReactNode }) {
 
     return (
         <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user }}>
-            {props.children}
+            {!loading && props.children}
         </AuthContext.Provider>
     )
 }

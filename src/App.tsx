@@ -8,6 +8,7 @@ import { AuthProvider } from './context/auth/AuthContext.tsx'
 import Banner from './pages/banners/Banner.tsx'
 import CreateBanner from './pages/banners/CreateBanner.tsx'
 import Login from './pages/authentication/Login.tsx'
+import ProtectedRoute from './components/ProtectedRoute.tsx'
 
 export default function App() {
     return (
@@ -20,29 +21,31 @@ export default function App() {
                 <PageDataProvider>
                     <BrowserRouter>
                         <Routes>
-                            <Route element={<Layout />}>
-                                <Route
-                                    path="banners"
-                                    element={<Banners />}
-                                />
-                                <Route
-                                    path="/banners/create"
-                                    element={<CreateBanner />}
-                                />
-                                <Route
-                                    path="banners/:id"
-                                    element={<Banner />}
-                                />
-                                <Route
-                                    path="/login"
-                                    element={<Login />}
-                                />
+                            <Route element={<ProtectedRoute />}>
+                                <Route element={<Layout />}>
+                                    <Route
+                                        path="banners"
+                                        element={<Banners />}
+                                    />
+                                    <Route
+                                        path="/banners/create"
+                                        element={<CreateBanner />}
+                                    />
+                                    <Route
+                                        path="banners/:id"
+                                        element={<Banner />}
+                                    />
+                                    <Route
+                                        path="*"
+                                        element={<Navigate to={'/banners'} />}
+                                    />
+                                </Route>
                                 {/*<Route path="contact" element={<Contact />} />*/}
-                                <Route
-                                    path="*"
-                                    element={<Navigate to={'/banners'} />}
-                                />
                             </Route>
+                            <Route
+                                path="/login"
+                                element={<Login />}
+                            />
                         </Routes>
                     </BrowserRouter>
                 </PageDataProvider>
