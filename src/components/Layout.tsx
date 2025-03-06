@@ -26,7 +26,7 @@ export default function Layout() {
                         pt: {
                             xs: 'calc(12px + var(--Header-height))',
                             sm: 'calc(12px + var(--Header-height))',
-                            md: 3,
+                            md: 8,
                         },
                         pb: { xs: 2, sm: 2, md: 3 },
                         flex: 1,
@@ -34,6 +34,7 @@ export default function Layout() {
                         flexDirection: 'column',
                         minWidth: 0,
                         overflowY: 'auto',
+                        overflowX: 'hidden',
                         height: '100dvh',
                         gap: 1,
                     }}
@@ -74,6 +75,7 @@ export default function Layout() {
                         id="scroll"
                         sx={{
                             overflowY: 'auto',
+                            overflowX: 'hidden',
                             width: '100%',
                             height: '90dvh',
                             padding: 2,

@@ -10,7 +10,6 @@ import Typography from '@mui/joy/Typography'
 import Sheet from '@mui/joy/Sheet'
 import ImageIcon from '@mui/icons-material/Image'
 
-import ColorSchemeToggle from './ColorSchemeToggle'
 import { closeSidebar } from '../utils'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Logo from './Logo'
@@ -102,10 +101,8 @@ export default function Sidebar() {
                 }}
                 onClick={() => closeSidebar()}
             />
-            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                {/* <Typography level="title-lg">Domain Management</Typography> */}
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', ml: 3 }}>
                 <Logo />
-                <ColorSchemeToggle sx={{ ml: 'auto' }} />
             </Box>
             <Box
                 sx={{

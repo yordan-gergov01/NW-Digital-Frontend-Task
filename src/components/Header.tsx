@@ -2,6 +2,9 @@ import GlobalStyles from '@mui/joy/GlobalStyles'
 import Sheet from '@mui/joy/Sheet'
 import IconButton from '@mui/joy/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
+import Box from '@mui/joy/Box'
+
+import ColorSchemeToggle from './ColorSchemeToggle'
 
 import { toggleSidebar } from '../utils'
 
@@ -9,7 +12,7 @@ export default function Header() {
     return (
         <Sheet
             sx={{
-                display: { xs: 'flex', md: 'none' },
+                display: { xs: 'flex', md: 'flex' },
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 position: 'fixed',
@@ -19,9 +22,7 @@ export default function Header() {
                 zIndex: 9995,
                 p: 2,
                 gap: 1,
-                borderBottom: '1px solid',
-                borderColor: 'background.level1',
-                boxShadow: 'sm',
+                borderBottom: 'none',
             }}
         >
             <GlobalStyles
@@ -42,6 +43,10 @@ export default function Header() {
             >
                 <MenuIcon />
             </IconButton>
+
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mt: 5 }}>
+                <ColorSchemeToggle sx={{ height: 40, width: 40 }} />
+            </Box>
         </Sheet>
     )
 }

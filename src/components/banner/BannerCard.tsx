@@ -20,7 +20,7 @@ export default function BannerCard(props: { banner?: BannerDto; delete?: () => v
                 md={4}
                 lg={3}
             >
-                <Card sx={{ height: 400, maxWidth: 350, width: '100%', margin: 'auto' }}>
+                <Card sx={{ height: 370, maxWidth: 350, width: '100%', margin: 'auto' }}>
                     <CardOverflow>
                         <Image url={props.banner?.imageUrl} />
                     </CardOverflow>
@@ -52,15 +52,7 @@ export default function BannerCard(props: { banner?: BannerDto; delete?: () => v
                             </Typography>
                         </Box>
                     </Box>
-                    <CardActions>
-                        <IconButton
-                            variant="outlined"
-                            size="sm"
-                            sx={{ width: '20%', alignSelf: 'center' }}
-                            onClick={() => setIsOpen(true)}
-                        >
-                            <Delete />
-                        </IconButton>
+                    <CardActions sx={{ mt: 10 }}>
                         <Button
                             variant="solid"
                             type={'button'}
@@ -71,6 +63,14 @@ export default function BannerCard(props: { banner?: BannerDto; delete?: () => v
                         >
                             Edit
                         </Button>
+                        <IconButton
+                            variant="outlined"
+                            size="sm"
+                            sx={{ width: '20%', alignSelf: 'center' }}
+                            onClick={() => setIsOpen(true)}
+                        >
+                            <Delete />
+                        </IconButton>
                     </CardActions>
                 </Card>
             </Grid>

@@ -7,7 +7,7 @@ export default function BannerCreatePage() {
 
     // use context to set the Page's title
     useEffect(() => {
-        setPageData({ title: 'Create New Banner' })
+        setPageData({ title: 'New Banner' })
     }, [setPageData])
 
     return <BannerForm />

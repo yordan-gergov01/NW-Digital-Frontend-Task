@@ -75,7 +75,14 @@ export default function ScrollableCards<T>(props: {
             <Grid
                 container
                 spacing={2}
-                sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
+                sx={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'center',
+                    width: '100%',
+                    maxWidth: '100%',
+                    overflowX: 'hidden',
+                }}
             >
                 {...cards}
             </Grid>
