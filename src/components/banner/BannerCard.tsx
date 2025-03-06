@@ -1,16 +1,18 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BannerDto } from '../../services/dto/banner.dto.ts'
+import { useColorScheme } from '@mui/joy'
+import Image from '../Image.tsx'
+import ConfirmModal from '../ConfirmModal.tsx'
 import { Button, Card, CardActions, CardOverflow, Skeleton, Grid, Typography } from '@mui/joy'
 import Box from '@mui/joy/Box'
 import IconButton from '@mui/joy/IconButton'
 import { Delete } from '@mui/icons-material'
-import Image from '../Image.tsx'
-import ConfirmModal from '../ConfirmModal.tsx'
 
 export default function BannerCard(props: { banner?: BannerDto; delete?: () => void }) {
     const [isOpen, setIsOpen] = useState(false)
     const navigate = useNavigate()
+    const { mode } = useColorScheme()
 
     return (
         <>
@@ -20,7 +22,16 @@ export default function BannerCard(props: { banner?: BannerDto; delete?: () => v
                 md={4}
                 lg={3}
             >
-                <Card sx={{ height: 370, maxWidth: 350, width: '100%', margin: 'auto' }}>
+                <Card
+                    sx={{
+                        height: 370,
+                        maxWidth: 350,
+                        width: '100%',
+                        margin: 'auto',
+                        border:
+                            mode === 'dark' ? '1px solid white' : '1px solid rgba(0, 0, 0, 0.2)',
+                    }}
+                >
                     <CardOverflow>
                         <Image url={props.banner?.imageUrl} />
                     </CardOverflow>
