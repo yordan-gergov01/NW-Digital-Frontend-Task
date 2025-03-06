@@ -1,12 +1,14 @@
+import { usePageData } from '../context/page-data/page-data.context.ts'
+import Sidebar from '../components/Sidebar'
+import Header from '../components/Header'
+import Footer from './Footer.tsx'
+import { Outlet } from 'react-router-dom'
+
 import { CssVarsProvider } from '@mui/joy/styles'
 import CssBaseline from '@mui/joy/CssBaseline'
 import Box from '@mui/joy/Box'
-import { Outlet } from 'react-router-dom'
-
-import Sidebar from '../components/Sidebar'
-import Header from '../components/Header'
 import Typography from '@mui/joy/Typography'
-import { usePageData } from '../context/page-data/page-data.context.ts'
+
 import Button from '@mui/joy/Button'
 import Sheet from '@mui/joy/Sheet'
 import Divider from '@mui/joy/Divider'
@@ -84,6 +86,7 @@ export default function Layout() {
                         <Outlet />
                     </Sheet>
                     <Divider />
+                    <Footer />
                 </Box>
             </Box>
         </CssVarsProvider>

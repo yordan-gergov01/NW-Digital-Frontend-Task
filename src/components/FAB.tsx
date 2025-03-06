@@ -9,7 +9,7 @@ export default function FAB() {
             style={{
                 position: 'fixed',
                 right: '72px',
-                bottom: '32px',
+                bottom: '90px',
                 height: '72px',
                 borderRadius: '50%',
             }}
